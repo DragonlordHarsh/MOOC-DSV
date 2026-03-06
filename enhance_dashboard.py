@@ -56,6 +56,7 @@ except ImportError:
 # ─────────────────────────────────────────────
 SOURCE_TWBX  = Path("Bank Loan Analysis Project.twbx")
 OUTPUT_TWBX  = Path("Bank Loan Analysis Project - Enhanced.twbx")
+OUTPUT_TWB   = Path("Bank Loan Analysis Project - Enhanced.twb")
 WORK_DIR     = Path("_twbx_workdir")
 
 # ── Dark Finance Palette ──────────────────────────────────────────────────────
@@ -612,20 +613,22 @@ def main():
     add_new_worksheets(root)
     inject_story(root)
     inject_dashboard_actions(root)
-    write_twb(tree, twb_path)
+    write_twb(tree, twb_path)          # update in-place for twbx repacking
+    write_twb(tree, OUTPUT_TWB)        # write standalone .twb output
     repack_twbx(WORK_DIR, OUTPUT_TWBX)
     shutil.rmtree(WORK_DIR)
     print("[CLEAN]  Temp directory removed.")
 
     print("\n" + "=" * 62)
     print(" Enhancement complete!")
-    print(f" Output : {OUTPUT_TWBX}")
-    print(f" Source : {SOURCE_TWBX}  (unchanged)")
+    print(f" Output (.twb)  : {OUTPUT_TWB}")
+    print(f" Output (.twbx) : {OUTPUT_TWBX}")
+    print(f" Source         : {SOURCE_TWBX}  (unchanged)")
     print("=" * 62)
     print("""
 NEXT STEPS
 ──────────
- 1. Download 'Bank Loan Analysis Project - Enhanced.twbx'
+ 1. Download 'Bank Loan Analysis Project - Enhanced.twb'
  2. Open in Tableau Desktop (2020.1 or later)
  3. All 14 calculated fields appear in the Data pane
  4. Six new worksheet stubs are ready for chart configuration
